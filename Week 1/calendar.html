@@ -7,6 +7,24 @@
 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+ <script>
+  $(function() {
+    $( "#tabs" ).tabs();
+  });
+  </script>
+    <script>
+  $(function() {
+    $( "#tabs" ).tabs({
+      beforeLoad: function( event, ui ) {
+        ui.jqXHR.fail(function() {
+          ui.panel.html(
+            "Couldn't load this tab. We'll try to fix this as soon as possible. " +
+            "If this wouldn't be a demo." );
+        });
+      }
+    });
+  });
+  </script>
 <style>
 body{
 		width: 24em;
@@ -33,8 +51,8 @@ body{
 <body>
 <div id="tabs">
 		<ul> <!-- these are the tab headers -->
-		    <li><a href="XXX">add event</a></li> <!-- TODO: this header should open the 'add' tab -->
-		    <li><a href="XXX">view events</a></li> <!-- TODO: this header should open 'get.php' tab (see 'content via ajax' in the documentation)-->
+		    <li><a href="#add">add event</a></li> <!-- TODO: this header should open the 'add' tab -->
+		    <li><a href="get.php">view events</a></li> <!-- TODO: this header should open 'get.php' tab (see 'content via ajax' in the documentation)-->
 		</ul>
 		<div id="add">
 			<form action="save.php" method="post" name="addForm">
@@ -58,10 +76,27 @@ body{
 <script>
 $(function () {
 	// TODO: hide <div id="participant">
+		$( "#participant" ).hide();
 	// TODO: when <a id="plink"> is clicked, show <div id="participant">
+		$("#plink" ).click(function(evt) {
+		$( "#participant" ).show();
+		});
 	// TODO: use jQuery UI to make a datpicker from <input name="date">
+
+    $("input[name$='date']").datepicker();
+
 	// TODO: get data from the form when submit button is clicked and use $.post function to send the data to save.php
+	$('form[name=addForm]').submit(function(evt){
+	evt.preventDefault();
+	console.log($(this));
+	var data = $(this).serialize();
+	$.post("save.php", data, function(){
+			alert("alert");
+	});
+	});
+
     // TODO: use jQuery UI to make tabs from <div id="tabs">
+	$('#tabs').tabs();
 });
 </script>
 </body>
