@@ -1,9 +1,9 @@
 <div id="accordion">
 <?php
     $host = 'mysql.metropolia.fi';
-    $dbname = ''; // your username
-    $user = ''; // your username
-    $pass = ''; // your database password
+    $dbname = 'timiho'; // your username
+    $user = 'timiho'; // your username
+    $pass = 'mysli'; // your database password
     
     try {
             $DBH = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
@@ -14,7 +14,6 @@
             echo "Could not connect to database.";
             file_put_contents('log.txt', $e->getMessage(), FILE_APPEND);
         }
-
 try {
     $eventList = array();
     $sql = "SELECT * FROM calendar";
@@ -27,10 +26,14 @@ try {
 	echo 'Something went wrong';
 	file_put_contents('log.txt', $e->getMessage()."\n\r", FILE_APPEND); // remember to set the permissions so that log.txt can be created
 }      
-
 ?>
 </div>
 <script>
+    $( "#accordion" ).accordion({
+		collapsible: true,
+		active: 'none'
+	});
+	
 // TODO: use jQuery UI to make an accordion from <div id="accordion">. 
 // Set 'collapsible' property to 'true' and 'active' property to 'none'
 </script>
